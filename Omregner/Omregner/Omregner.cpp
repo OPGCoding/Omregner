@@ -221,6 +221,30 @@ void convertVolumeFromFluidOunces(double fluidOunces, double &gallons, double &q
 }
 
 
+// Areal
+double SquareInch;
+double SquareFoot;
+double SquareYard;
+
+// Konvertere fra Square Inch
+void convertAreaFromSquareInches(double squareInches, double &squareFeet, double &squareYards) {
+    squareFeet = squareInches / 144.0;
+    squareYards = squareFeet / 9.0;
+}
+
+// Konvertere fra Square Foot
+void convertAreaFromSquareFeet(double squareFeet, double &squareInches, double &squareYards) {
+    squareInches = squareFeet * 144.0;
+    squareYards = squareFeet / 9.0;
+}
+
+// Konvertere fra Square Yard
+void convertAreaFromSquareYards(double squareYards, double &squareInches, double &squareFeet) {
+    squareInches = squareYards * 1296.0;
+    squareFeet = squareYards * 9.0;
+}
+
+
 int main() {
 	// FEJL
 	string KategoriFejl = "Der blev ikke valgt nogen kategori!";
@@ -245,6 +269,7 @@ int main() {
 	int LængdeInput;
 	int VægtInput;
 	int VolumenInput;
+	int ArealInput;
 
 
 	// Vælge kategori
@@ -609,22 +634,51 @@ int main() {
 		    break;
 		case 4:
 		    //Areal
+            double squareInches, squareFeet, squareYards;
+
+            cout << "Skriv 1, 2 eller 3:\n 1) Square Inch\n 2) Square Foot\n 3) Square Yard\n";
+            cin >> ArealInput;
+
+		    if (ArealInput == 1){
+		        // Square Inch
+                cout << "Hvor mange square inches skal konverteres: ";
+                cin >> input;
+
+                convertAreaFromSquareInches(input, squareFeet, squareYards);
+                cout << input << " square inches svarer til:\n";
+                cout << input << " square inches --> " << squareFeet << " square feet --> " << squareYards << " square yards\n";
+		    }
+		    else if (ArealInput == 2){
+		        // Square Foot
+                cout << "Hvor mange square feet skal konverteres: ";
+                cin >> input;
+
+                convertAreaFromSquareFeet(input, squareInches, squareYards);
+                cout << input << " square feet svarer til:\n";
+                cout << squareInches << " square inches --> " << input << " square feet --> " << squareYards << " square yards\n";
+		    }
+		    else if (ArealInput == 3){
+		        // Square Yard
+                cout << "Hvor mange square yards skal konverteres: ";
+                cin >> input;
+
+                convertAreaFromSquareYards(input, squareInches, squareFeet);
+                cout << input << " square yards svarer til:\n";
+                cout << squareInches << " square inches --> " << squareFeet << " square feet --> " << input << " square yards\n";
+		    }
+            else {
+                cout << KategoriFejl;
+            }
 
 		    break;
 		default:
 		    cout << KategoriFejl;
 		    break;
-
-
 		}
-
-
 	}
 	else {
 		cout << "Du har ikke valgt nogen kategori!";
 	}
-
-
 
 	main();
 }
